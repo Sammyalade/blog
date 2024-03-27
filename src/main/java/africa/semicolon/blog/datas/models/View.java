@@ -6,4 +6,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Data
 @Document("Views")
 public class View {
+
+
 }
