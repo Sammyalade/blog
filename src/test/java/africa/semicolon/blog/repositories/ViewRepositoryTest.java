@@ -1,4 +1,4 @@
-package repositories;
+package africa.semicolon.blog.repositories;
 
 
 import africa.semicolon.blog.Main;
