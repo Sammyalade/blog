@@ -12,7 +12,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 
-@SpringBootTest(classes = Main.class)
+@SpringBootTest
 public class UserRepositoryTest {
 
     @Autowired
