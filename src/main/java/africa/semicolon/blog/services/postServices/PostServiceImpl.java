@@ -27,7 +27,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public void deletePost(PostDeleteRequest postDeleteRequest) {
+    public void deletePost(String title) {
 
     }
 
