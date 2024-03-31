@@ -5,7 +5,7 @@ import africa.semicolon.blog.dtos.request.postRequest.*;
 public interface PostService {
 
     void makePost(PostCreationRequest postCreationRequest);
-    void deletePost(PostDeleteRequest post);
+    void deletePost(String title);
     void updatePost(PostUpdateRequest postUpdateRequest);
     void makeComment(PostCommentRequest postLikeRequest);
     void makeLike(PostLikeRequest postLikeRequest);
