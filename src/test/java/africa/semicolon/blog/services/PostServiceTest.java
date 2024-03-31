@@ -2,7 +2,6 @@ package africa.semicolon.blog.services;
 
 import africa.semicolon.blog.datas.repositories.PostRepository;
 import africa.semicolon.blog.dtos.request.postRequest.PostCreationRequest;
-import africa.semicolon.blog.dtos.request.postRequest.PostDeleteRequest;
 import africa.semicolon.blog.exceptions.EmptyStringException;
 import africa.semicolon.blog.services.postServices.PostService;
 import org.junit.jupiter.api.BeforeEach;
@@ -58,9 +57,7 @@ public class PostServiceTest {
         postCreationRequest.setTitle("Title");
         postCreationRequest.setContent("Content");
         postService.makePost(postCreationRequest);
-        PostDeleteRequest postDeleteRequest = new PostDeleteRequest();
-        postDeleteRequest
-        postService.deletePost(postDeleteRequest);
+        postService.deletePost("Title");
         assertThat(postRepository.count(), is(1L));
     }
 
