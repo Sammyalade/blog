@@ -3,6 +3,7 @@ package africa.semicolon.blog.services;
 import africa.semicolon.blog.datas.repositories.PostRepository;
 import africa.semicolon.blog.dtos.request.postRequest.PostCreationRequest;
 import africa.semicolon.blog.exceptions.EmptyStringException;
+import africa.semicolon.blog.exceptions.UniqueTitleException;
 import africa.semicolon.blog.services.postServices.PostService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -58,7 +59,16 @@ public class PostServiceTest {
         postCreationRequest.setContent("Content");
         postService.makePost(postCreationRequest);
         postService.deletePost("Title");
-        assertThat(postRepository.count(), is(1L));
+        assertThat(postRepository.count(), is(0L));
+    }
+
+    @Test
+    public void testThatPostTitleIsUnique(){
+        PostCreationRequest postCreationRequest = new PostCreationRequest();
+        postCreationRequest.setTitle("Title");
+        postCreationRequest.setContent("Content");
+        postService.makePost(postCreationRequest);
+        assertThrows(UniqueTitleException.class, ()-> postService.makePost(postCreationRequest));
     }
 
 }
