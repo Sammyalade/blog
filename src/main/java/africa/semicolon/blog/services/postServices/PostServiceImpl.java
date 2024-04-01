@@ -9,6 +9,7 @@ import africa.semicolon.blog.exceptions.EmptyStringException;
 import africa.semicolon.blog.exceptions.PostNotFoundException;
 import africa.semicolon.blog.exceptions.UniqueTitleException;
 import africa.semicolon.blog.services.commentServices.CommentService;
+import africa.semicolon.blog.services.likeServices.LikeService;
 import africa.semicolon.blog.services.viewServices.ViewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,11 +26,12 @@ public class PostServiceImpl implements PostService {
 
     @Autowired
     private PostRepository postRepository;
-
     @Autowired
     private CommentService commentService;
     @Autowired
     private ViewService viewService;
+    @Autowired
+    private LikeService likeService;
 
     @Override
     public void makePost(PostCreationRequest postCreationRequest) {
@@ -79,7 +81,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public void makeLike(PostLikeRequest postLikeRequest) {
-
+        likeService.makeLike(postLikeRequest);
     }
 
 
