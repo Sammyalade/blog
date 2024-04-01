@@ -2,13 +2,13 @@ package africa.semicolon.blog.services.postServices;
 
 import africa.semicolon.blog.datas.models.Comment;
 import africa.semicolon.blog.datas.models.Post;
-import africa.semicolon.blog.datas.repositories.CommentRepository;
 import africa.semicolon.blog.datas.repositories.PostRepository;
 import africa.semicolon.blog.dtos.request.postRequest.*;
 import africa.semicolon.blog.exceptions.EmptyStringException;
 import africa.semicolon.blog.exceptions.PostNotFoundException;
 import africa.semicolon.blog.exceptions.UniqueTitleException;
 import africa.semicolon.blog.services.commentServices.CommentService;
+import africa.semicolon.blog.services.viewServices.ViewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +25,8 @@ public class PostServiceImpl implements PostService {
 
     @Autowired
     private CommentService commentService;
+    @Autowired
+    private ViewService viewService;
 
     @Override
     public void makePost(PostCreationRequest postCreationRequest) {
@@ -54,6 +56,11 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    public void viewPost(PostViewRequest postViewRequest) {
+        viewService.viewPost(postViewRequest);
+    }
+
+    @Override
     public void makeComment(PostCommentRequest postCommentRequest) {
         Comment  comment = commentService.makeComment(postCommentRequest);
         Post post =  findPost(comment.getPostTitle(), postRepository.findAll());
@@ -63,11 +70,6 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public void makeLike(PostLikeRequest postLikeRequest) {
-
-    }
-
-    @Override
-    public void viewPost(PostViewRequest postViewRequest) {
 
     }
 
