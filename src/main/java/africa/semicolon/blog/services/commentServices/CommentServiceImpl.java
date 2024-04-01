@@ -17,8 +17,8 @@ public class CommentServiceImpl implements CommentService {
     @Autowired
     private CommentRepository commentRepository;
     @Override
-    public void makeComment(PostCommentRequest postCommentRequest, List<Post> posts) {
-        Comment comment = map(postCommentRequest, posts);
+    public void makeComment(PostCommentRequest postCommentRequest) {
+        Comment comment = map(postCommentRequest);
         commentRepository.save(comment);
     }
 }
