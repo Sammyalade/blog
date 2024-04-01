@@ -1,10 +1,12 @@
 package africa.semicolon.blog.utils;
 
 import africa.semicolon.blog.datas.models.Comment;
+import africa.semicolon.blog.datas.models.Like;
 import africa.semicolon.blog.datas.models.Post;
 import africa.semicolon.blog.datas.models.View;
 import africa.semicolon.blog.dtos.request.postRequest.PostCommentRequest;
 import africa.semicolon.blog.dtos.request.postRequest.PostCreationRequest;
+import africa.semicolon.blog.dtos.request.postRequest.PostLikeRequest;
 import africa.semicolon.blog.dtos.request.postRequest.PostViewRequest;
 
 import java.util.List;
@@ -33,5 +35,12 @@ public class Mapper {
         view.setViewer(postViewRequest.getViewer());
         view.setPostTitle(postViewRequest.getPostTitle());
         return view;
+    }
+
+    public static Like map(PostLikeRequest postLikeRequest){
+        Like like = new Like();
+        like.setLikedBy(postLikeRequest.getLikedBy());
+        like.setPostTitle(postLikeRequest.getPostTitle());
+        return like;
     }
 }
