@@ -18,12 +18,10 @@ public class Mapper {
         return post;
     }
 
-    public static Comment map(PostCommentRequest postCommentRequest, List<Post> posts) {
+    public static Comment map(PostCommentRequest postCommentRequest) {
         Comment comment = new Comment();
         comment.setViewer(postCommentRequest.getViewer());
         comment.setCommentBody(postCommentRequest.getCommentBody());
-        Post post = findPost(postCommentRequest.getPostTitle(), posts);
-        comment.setPost(post);
         return comment;
     }
 }
