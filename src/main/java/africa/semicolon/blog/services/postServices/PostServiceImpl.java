@@ -15,11 +15,10 @@ import africa.semicolon.blog.services.viewServices.ViewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static africa.semicolon.blog.utils.Mapper.map;
-import static africa.semicolon.blog.utils.PostUtility.checkIfIsNull;
+import static africa.semicolon.blog.utils.PostUtility.checkIfListIsNull;
 import static africa.semicolon.blog.utils.PostUtility.findPost;
 
 @Service
@@ -66,7 +65,7 @@ public class PostServiceImpl implements PostService {
         View view = viewService.viewPost(postViewRequest);
         Post post = findPost(view.getPostTitle(), postRepository.findAll());
         checkIfPostIsNotNull(post);
-        checkIfIsNull(post);
+        post.setViews((List<View>) checkIfListIsNull(post.getViews()));
         post.getViews().add(view);
     }
 
@@ -77,6 +76,7 @@ public class PostServiceImpl implements PostService {
         Comment  comment = commentService.makeComment(postCommentRequest);
         Post post =  findPost(comment.getPostTitle(), postRepository.findAll());
         checkIfPostIsNotNull(post);
+        post.setComments((List<Comment>) checkIfListIsNull(post.getComments()));
         post.getComments().add(comment);
     }
 
@@ -85,7 +85,8 @@ public class PostServiceImpl implements PostService {
         Like like = likeService.makeLike(postLikeRequest);
         Post post = findPost(like.getPostTitle(), postRepository.findAll());
         checkIfPostIsNotNull(post);
-        post.
+        post.setLikes((List<Like>) checkIfListIsNull(post.getLikes()));
+        post.getLikes().add(like);
     }
 
 
