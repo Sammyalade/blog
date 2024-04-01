@@ -3,6 +3,7 @@ package africa.semicolon.blog.services;
 import africa.semicolon.blog.datas.repositories.PostRepository;
 import africa.semicolon.blog.dtos.request.postRequest.PostCreationRequest;
 import africa.semicolon.blog.exceptions.EmptyStringException;
+import africa.semicolon.blog.exceptions.PostNotFoundException;
 import africa.semicolon.blog.exceptions.UniqueTitleException;
 import africa.semicolon.blog.services.postServices.PostService;
 import org.junit.jupiter.api.BeforeEach;
@@ -69,6 +70,11 @@ public class PostServiceTest {
         postCreationRequest.setContent("Content");
         postService.makePost(postCreationRequest);
         assertThrows(UniqueTitleException.class, ()-> postService.makePost(postCreationRequest));
+    }
+
+    @Test
+    public void deletePostWhenRepositoryIsEmptyTest(){
+        assertThrows(PostNotFoundException.class,()-> postService.deletePost("Title"));
     }
 
 }
