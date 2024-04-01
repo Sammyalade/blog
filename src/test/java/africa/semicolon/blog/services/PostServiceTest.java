@@ -3,12 +3,10 @@ package africa.semicolon.blog.services;
 import africa.semicolon.blog.datas.models.Post;
 import africa.semicolon.blog.datas.models.User;
 import africa.semicolon.blog.datas.repositories.CommentRepository;
+import africa.semicolon.blog.datas.repositories.LikeRepository;
 import africa.semicolon.blog.datas.repositories.PostRepository;
 import africa.semicolon.blog.datas.repositories.ViewRepository;
-import africa.semicolon.blog.dtos.request.postRequest.PostCommentRequest;
-import africa.semicolon.blog.dtos.request.postRequest.PostCreationRequest;
-import africa.semicolon.blog.dtos.request.postRequest.PostUpdateRequest;
-import africa.semicolon.blog.dtos.request.postRequest.PostViewRequest;
+import africa.semicolon.blog.dtos.request.postRequest.*;
 import africa.semicolon.blog.exceptions.EmptyStringException;
 import africa.semicolon.blog.exceptions.PostNotFoundException;
 import africa.semicolon.blog.exceptions.UniqueTitleException;
@@ -37,11 +35,15 @@ public class PostServiceTest {
     @Autowired
     private ViewRepository viewRepository;
 
+    @Autowired
+    private LikeRepository likeRepository;
+
     @BeforeEach
     public void setUp() {
         postRepository.deleteAll();
         commentRepository.deleteAll();
         viewRepository.deleteAll();
+        likeRepository.deleteAll();
     }
     @Test
     public void makePost_checkPostRepository_numberOfPostIsOneTest(){
@@ -143,6 +145,17 @@ public class PostServiceTest {
     }
 
     @Test
-    public void
+    public void makePost_likePost_numberOfPostLikeIncreaseTest(){
+        PostCreationRequest postCreationRequest = new PostCreationRequest();
+        postCreationRequest.setTitle("Title");
+        postCreationRequest.setContent("Content");
+        postService.makePost(postCreationRequest);
+        PostLikeRequest postLikeRequest = new PostLikeRequest();
+        postLikeRequest.setPostTitle("Title");
+        User user = new User();
+        postLikeRequest.setLikedBy(user);
+        postService.makeLike(postLikeRequest);
+        assertThat(likeRepository.count(), is(1L));
+    }
 
 }
