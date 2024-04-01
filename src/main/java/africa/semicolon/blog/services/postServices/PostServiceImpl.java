@@ -2,6 +2,7 @@ package africa.semicolon.blog.services.postServices;
 
 import africa.semicolon.blog.datas.models.Comment;
 import africa.semicolon.blog.datas.models.Post;
+import africa.semicolon.blog.datas.models.View;
 import africa.semicolon.blog.datas.repositories.PostRepository;
 import africa.semicolon.blog.dtos.request.postRequest.*;
 import africa.semicolon.blog.exceptions.EmptyStringException;
@@ -57,7 +58,10 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public void viewPost(PostViewRequest postViewRequest) {
-        viewService.viewPost(postViewRequest);
+        View view = viewService.viewPost(postViewRequest);
+        Post post = findPost(view.getPostTitle(), postRepository.findAll());
+        checkIfPostIsNotNull(post);
+        post.getViews().add(view);
     }
 
     @Override
