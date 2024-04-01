@@ -12,6 +12,7 @@ import java.time.LocalDate;
 public class Comment {
     @Id
     private String id;
-    private LocalDate timeOfView;
+    private String commentBody;
+    private LocalDate timeOfComment = LocalDate.now();
     private User viewer;
 }
