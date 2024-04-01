@@ -6,5 +6,5 @@ import africa.semicolon.blog.dtos.request.postRequest.PostCommentRequest;
 import java.util.List;
 
 public interface CommentService {
-    void makeComment(PostCommentRequest postCommentRequest, List<Post> posts);
+    void makeComment(PostCommentRequest postCommentRequest);
 }
