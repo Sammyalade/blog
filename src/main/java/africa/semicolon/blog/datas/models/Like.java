@@ -10,4 +10,5 @@ public class Like {
     @Id
     private String id;
     private User likedBy;
+    private String postTitle;
 }
