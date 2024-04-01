@@ -1,5 +1,6 @@
 package africa.semicolon.blog.services.postServices;
 
+import africa.semicolon.blog.datas.models.Comment;
 import africa.semicolon.blog.datas.models.Post;
 import africa.semicolon.blog.datas.repositories.CommentRepository;
 import africa.semicolon.blog.datas.repositories.PostRepository;
@@ -10,6 +11,9 @@ import africa.semicolon.blog.exceptions.UniqueTitleException;
 import africa.semicolon.blog.services.commentServices.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+
 import static africa.semicolon.blog.utils.Mapper.map;
 import static africa.semicolon.blog.utils.PostUtility.findPost;
 
@@ -51,7 +55,10 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public void makeComment(PostCommentRequest postCommentRequest) {
-        commentService.makeComment(postCommentRequest);
+        Comment  comment = commentService.makeComment(postCommentRequest);
+        Post post =  findPost(comment.getPostTitle(), postRepository.findAll());
+        checkIfPostIsNotNull(post);
+        post.getComments().add(comment);
     }
 
     @Override
