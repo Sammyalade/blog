@@ -4,9 +4,11 @@ import africa.semicolon.blog.datas.models.Post;
 import africa.semicolon.blog.datas.models.User;
 import africa.semicolon.blog.datas.repositories.CommentRepository;
 import africa.semicolon.blog.datas.repositories.PostRepository;
+import africa.semicolon.blog.datas.repositories.ViewRepository;
 import africa.semicolon.blog.dtos.request.postRequest.PostCommentRequest;
 import africa.semicolon.blog.dtos.request.postRequest.PostCreationRequest;
 import africa.semicolon.blog.dtos.request.postRequest.PostUpdateRequest;
+import africa.semicolon.blog.dtos.request.postRequest.PostViewRequest;
 import africa.semicolon.blog.exceptions.EmptyStringException;
 import africa.semicolon.blog.exceptions.PostNotFoundException;
 import africa.semicolon.blog.exceptions.UniqueTitleException;
@@ -32,10 +34,14 @@ public class PostServiceTest {
     @Autowired
     private CommentRepository commentRepository;
 
+    @Autowired
+    private ViewRepository viewRepository;
+
     @BeforeEach
     public void setUp() {
         postRepository.deleteAll();
         commentRepository.deleteAll();
+        viewRepository.deleteAll();
     }
     @Test
     public void makePost_checkPostRepository_numberOfPostIsOneTest(){
@@ -120,6 +126,19 @@ public class PostServiceTest {
         postCommentRequest.setViewer(user);
         postService.makeComment(postCommentRequest);
         assertThat(commentRepository.count(), is(1L));
+    }
+
+    @Test
+    public void makePost_viewPost_numberOfPostViewIsOneTest(){
+        PostCreationRequest postCreationRequest = new PostCreationRequest();
+        postCreationRequest.setTitle("Title");
+        postCreationRequest.setContent("Content");
+        postService.makePost(postCreationRequest);
+        PostViewRequest postViewRequest = new PostViewRequest();
+        postViewRequest.setPostTitle("Title");
+        postViewRequest.setViewer(new User());
+        postService.viewPost(postViewRequest);
+        assertThat(viewRepository.count(), is(1L));
     }
 
 }
