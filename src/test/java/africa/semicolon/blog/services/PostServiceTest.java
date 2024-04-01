@@ -1,7 +1,9 @@
 package africa.semicolon.blog.services;
 
+import africa.semicolon.blog.datas.models.Post;
 import africa.semicolon.blog.datas.repositories.PostRepository;
 import africa.semicolon.blog.dtos.request.postRequest.PostCreationRequest;
+import africa.semicolon.blog.dtos.request.postRequest.PostUpdateRequest;
 import africa.semicolon.blog.exceptions.EmptyStringException;
 import africa.semicolon.blog.exceptions.PostNotFoundException;
 import africa.semicolon.blog.exceptions.UniqueTitleException;
@@ -11,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import static africa.semicolon.blog.utils.PostUtility.findPost;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -75,6 +78,20 @@ public class PostServiceTest {
     @Test
     public void deletePostWhenRepositoryIsEmptyTest(){
         assertThrows(PostNotFoundException.class,()-> postService.deletePost("Title"));
+    }
+
+    @Test
+    public void makePost_updatePost_postIsUpdatedTest(){
+        PostCreationRequest postCreationRequest = new PostCreationRequest();
+        postCreationRequest.setTitle("Title");
+        postCreationRequest.setContent("Content");
+        postService.makePost(postCreationRequest);
+        PostUpdateRequest postUpdateRequest = new PostUpdateRequest();
+        postUpdateRequest.setTitle("Title");
+        postUpdateRequest.setContent("New Content");
+        postService.updatePost(postUpdateRequest);
+        Post post = findPost("Title", postRepository.findAll());
+        assertThat(post.getContent(), is("New Content"));
     }
 
 }
