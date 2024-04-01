@@ -1,6 +1,7 @@
 package africa.semicolon.blog.services.postServices;
 
 import africa.semicolon.blog.datas.models.Comment;
+import africa.semicolon.blog.datas.models.Like;
 import africa.semicolon.blog.datas.models.Post;
 import africa.semicolon.blog.datas.models.View;
 import africa.semicolon.blog.datas.repositories.PostRepository;
@@ -81,7 +82,10 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public void makeLike(PostLikeRequest postLikeRequest) {
-        likeService.makeLike(postLikeRequest);
+        Like like = likeService.makeLike(postLikeRequest);
+        Post post = findPost(like.getPostTitle(), postRepository.findAll());
+        checkIfPostIsNotNull(post);
+        post.
     }
 
 
