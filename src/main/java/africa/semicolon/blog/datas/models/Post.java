@@ -20,4 +20,6 @@ public class Post {
     private List<View> views;
     @DBRef
     private List<Comment> comments;
+    @DBRef
+    private List<Like> likes;
 }
