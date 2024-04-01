@@ -9,6 +9,8 @@ import africa.semicolon.blog.exceptions.UniqueTitleException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
+
 import static africa.semicolon.blog.utils.Mapper.map;
 import static africa.semicolon.blog.utils.PostUtility.findPost;
 
@@ -37,7 +39,10 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public void updatePost(PostUpdateRequest postUpdateRequest) {
-
+        Post post = map(postUpdateRequest);
+        validateForEmptyString(post);
+        postRepository.delete(Objects.requireNonNull(findPost(post.getTitle(), postRepository.findAll())));
+        postRepository.save(post);
     }
 
     @Override
