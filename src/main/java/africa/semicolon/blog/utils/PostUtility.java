@@ -1,5 +1,6 @@
 package africa.semicolon.blog.utils;
 
+import africa.semicolon.blog.datas.models.Comment;
 import africa.semicolon.blog.datas.models.Post;
 
 import java.util.ArrayList;
@@ -16,9 +17,9 @@ public class PostUtility {
         return null;
     }
 
-    public static void checkIfIsNull(Post post) {
-        if(post.getViews() == null){
-            post.setViews(new ArrayList<>());
-        }
+    public static List<?> checkIfListIsNull(List<?> lists) {
+        if(lists == null) lists = new ArrayList<>();
+
+        return lists;
     }
 }
