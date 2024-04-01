@@ -25,6 +25,7 @@ public class CommentServiceTest {
     @Test
     public void testAddComment() {
         PostCommentRequest postCommentRequest = new PostCommentRequest();
+        postCommentRequest.setPostTitle("Test Title");
         postCommentRequest.setCommentBody("My comment");
         User user = new User();
         postCommentRequest.setViewer(user);
