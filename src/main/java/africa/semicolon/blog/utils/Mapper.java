@@ -22,6 +22,7 @@ public class Mapper {
         Comment comment = new Comment();
         comment.setViewer(postCommentRequest.getViewer());
         comment.setCommentBody(postCommentRequest.getCommentBody());
+        comment.setPostTitle(postCommentRequest.getPostTitle());
         return comment;
     }
 }
