@@ -4,6 +4,7 @@ import africa.semicolon.blog.datas.models.Post;
 import africa.semicolon.blog.datas.repositories.PostRepository;
 import africa.semicolon.blog.dtos.request.postRequest.*;
 import africa.semicolon.blog.exceptions.EmptyStringException;
+import africa.semicolon.blog.exceptions.PostNotFoundException;
 import africa.semicolon.blog.exceptions.UniqueTitleException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,9 +44,9 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public void deletePost(String title) {
-        for(Post post : postRepository.findAll()) {
-            if(post.getTitle().equals(title)) postRepository.delete(post);
-        }
+        Post post = findPost(title);
+        if(post == null) throw new PostNotFoundException("Post to be deleted not found");
+        postRepository.delete(post);
     }
 
     @Override
