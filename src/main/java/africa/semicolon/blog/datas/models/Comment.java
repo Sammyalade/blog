@@ -15,4 +15,5 @@ public class Comment {
     private String commentBody;
     private LocalDate timeOfComment = LocalDate.now();
     private User viewer;
+    private Post post;
 }
