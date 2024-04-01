@@ -8,4 +8,5 @@ import java.time.LocalDate;
 public class PostCommentRequest {
     private String commentBody;
     private User viewer;
+    private String postTitle;
 }
