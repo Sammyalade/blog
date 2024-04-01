@@ -13,9 +13,11 @@ import africa.semicolon.blog.services.viewServices.ViewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static africa.semicolon.blog.utils.Mapper.map;
+import static africa.semicolon.blog.utils.PostUtility.checkIfIsNull;
 import static africa.semicolon.blog.utils.PostUtility.findPost;
 
 @Service
@@ -61,8 +63,11 @@ public class PostServiceImpl implements PostService {
         View view = viewService.viewPost(postViewRequest);
         Post post = findPost(view.getPostTitle(), postRepository.findAll());
         checkIfPostIsNotNull(post);
+        checkIfIsNull(post);
         post.getViews().add(view);
     }
+
+
 
     @Override
     public void makeComment(PostCommentRequest postCommentRequest) {
