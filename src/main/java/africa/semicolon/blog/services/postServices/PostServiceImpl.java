@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import static africa.semicolon.blog.utils.Mapper.map;
+import static africa.semicolon.blog.utils.PostUtility.findPost;
 
 @Service
 public class PostServiceImpl implements PostService {
@@ -25,26 +26,11 @@ public class PostServiceImpl implements PostService {
         postRepository.save(post);
     }
 
-    private void checkForUniqueTitle(PostCreationRequest postCreationRequest) {
-        if (findPost(postCreationRequest.getTitle()) != null) throw new UniqueTitleException("Title has been used. Tiyle has to be unique");
-    }
 
-    private Post findPost(String title) {
-        for(Post post : postRepository.findAll()) {
-            if(post.getTitle().equals(title)) {
-                return post;
-            }
-        }
-        return null;
-    }
-
-    private static void validateForEmptyString(Post post) {
-        if(post.getTitle().isEmpty() || post.getContent().isEmpty()) throw new EmptyStringException("Title or Content");
-    }
 
     @Override
     public void deletePost(String title) {
-        Post post = findPost(title);
+        Post post = findPost(title, postRepository.findAll());
         if(post == null) throw new PostNotFoundException("Post to be deleted not found");
         postRepository.delete(post);
     }
@@ -70,4 +56,17 @@ public class PostServiceImpl implements PostService {
     }
 
 
+
+
+
+
+
+
+    private static void validateForEmptyString(Post post) {
+        if(post.getTitle().isEmpty() || post.getContent().isEmpty()) throw new EmptyStringException("Title or Content");
+    }
+
+    private void checkForUniqueTitle(PostCreationRequest postCreationRequest) {
+        if (findPost(postCreationRequest.getTitle(), postRepository.findAll()) != null) throw new UniqueTitleException("Title has been used. Tiyle has to be unique");
+    }
 }
