@@ -15,8 +15,9 @@ public class ViewServiceImpl implements ViewService{
     @Autowired
     private ViewRepository viewRepository;
     @Override
-    public void viewPost(PostViewRequest postViewRequest) {
+    public View viewPost(PostViewRequest postViewRequest) {
         View view = map(postViewRequest);
         viewRepository.save(view);
+        return view;
     }
 }
