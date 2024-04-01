@@ -136,7 +136,8 @@ public class PostServiceTest {
         postService.makePost(postCreationRequest);
         PostViewRequest postViewRequest = new PostViewRequest();
         postViewRequest.setPostTitle("Title");
-        postViewRequest.setViewer(new User());
+        User user = new User();
+        postViewRequest.setViewer(user);
         postService.viewPost(postViewRequest);
         assertThat(viewRepository.count(), is(1L));
     }
