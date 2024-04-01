@@ -142,4 +142,7 @@ public class PostServiceTest {
         assertThat(viewRepository.count(), is(1L));
     }
 
+    @Test
+    public void
+
 }
