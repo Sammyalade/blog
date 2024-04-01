@@ -13,6 +13,7 @@ public class View {
     @Id
     private String id;
     private User viewer;
+    private String postTitle;
     private LocalDateTime viewTime;
 
 }
