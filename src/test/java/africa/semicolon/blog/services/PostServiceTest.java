@@ -125,6 +125,7 @@ public class PostServiceTest {
         User user = new User();
         PostCommentRequest postCommentRequest = new PostCommentRequest();
         postCommentRequest.setCommentBody("My comment");
+        postCommentRequest.setPostTitle("Title");
         postCommentRequest.setViewer(user);
         postService.makeComment(postCommentRequest);
         assertThat(commentRepository.count(), is(1L));
@@ -157,5 +158,7 @@ public class PostServiceTest {
         postService.makeLike(postLikeRequest);
         assertThat(likeRepository.count(), is(1L));
     }
+
+
 
 }
