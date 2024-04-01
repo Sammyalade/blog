@@ -1,16 +1,15 @@
 package africa.semicolon.blog.services.postServices;
 
 import africa.semicolon.blog.datas.models.Post;
+import africa.semicolon.blog.datas.repositories.CommentRepository;
 import africa.semicolon.blog.datas.repositories.PostRepository;
 import africa.semicolon.blog.dtos.request.postRequest.*;
 import africa.semicolon.blog.exceptions.EmptyStringException;
 import africa.semicolon.blog.exceptions.PostNotFoundException;
 import africa.semicolon.blog.exceptions.UniqueTitleException;
+import africa.semicolon.blog.services.commentServices.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Objects;
-
 import static africa.semicolon.blog.utils.Mapper.map;
 import static africa.semicolon.blog.utils.PostUtility.findPost;
 
@@ -19,6 +18,9 @@ public class PostServiceImpl implements PostService {
 
     @Autowired
     private PostRepository postRepository;
+
+    @Autowired
+    private CommentService commentService;
 
     @Override
     public void makePost(PostCreationRequest postCreationRequest) {
@@ -33,7 +35,7 @@ public class PostServiceImpl implements PostService {
     @Override
     public void deletePost(String title) {
         Post post = findPost(title, postRepository.findAll());
-        if(post == null) throw new PostNotFoundException("Post to be deleted not found");
+        checkIfPostIsNotNull(post);
         postRepository.delete(post);
     }
 
@@ -41,13 +43,15 @@ public class PostServiceImpl implements PostService {
     public void updatePost(PostUpdateRequest postUpdateRequest) {
         Post post = map(postUpdateRequest);
         validateForEmptyString(post);
-        postRepository.delete(Objects.requireNonNull(findPost(post.getTitle(), postRepository.findAll())));
+        Post postToBeUpdated = findPost(post.getTitle(), postRepository.findAll());
+        checkIfPostIsNotNull(postToBeUpdated);
+        postRepository.delete(postToBeUpdated);
         postRepository.save(post);
     }
 
     @Override
-    public void makeComment(PostCommentRequest postLikeRequest) {
-
+    public void makeComment(PostCommentRequest postCommentRequest) {
+        commentService.makeComment(postCommentRequest);
     }
 
     @Override
@@ -66,6 +70,10 @@ public class PostServiceImpl implements PostService {
 
 
 
+
+    private static void checkIfPostIsNotNull(Post post) {
+        if(post == null) throw new PostNotFoundException("Post not found");
+    }
 
     private static void validateForEmptyString(Post post) {
         if(post.getTitle().isEmpty() || post.getContent().isEmpty()) throw new EmptyStringException("Title or Content");
