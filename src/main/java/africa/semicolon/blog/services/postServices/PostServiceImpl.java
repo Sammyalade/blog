@@ -51,7 +51,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public void makeComment(PostCommentRequest postCommentRequest) {
-        commentService.makeComment(postCommentRequest, postRepository.findAll());
+        commentService.makeComment(postCommentRequest);
     }
 
     @Override
