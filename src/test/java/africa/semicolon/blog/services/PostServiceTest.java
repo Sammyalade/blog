@@ -159,6 +159,9 @@ public class PostServiceTest {
         assertThat(likeRepository.count(), is(1L));
     }
 
+    @Test
+    public void makePost_likePost_removeLike_likeIsRemovedTest(){
 
+    }
 
 }
