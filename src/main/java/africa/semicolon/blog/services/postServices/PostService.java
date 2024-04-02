@@ -10,4 +10,5 @@ public interface PostService {
     void makeComment(PostCommentRequest postLikeRequest);
     void makeLike(PostLikeRequest postLikeRequest);
     void viewPost(PostViewRequest postViewRequest);
+    void removeLike(PostLikeRemoveRequest postLikeRemoveRequest);
 }
