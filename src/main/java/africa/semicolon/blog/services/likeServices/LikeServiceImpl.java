@@ -7,6 +7,9 @@ import africa.semicolon.blog.exceptions.LikeAlreadyExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
+import static africa.semicolon.blog.utils.LikeUtility.checkIfUserLikeExist;
 import static africa.semicolon.blog.utils.Mapper.map;
 
 @Service("likeServiceImpl")
@@ -17,19 +20,12 @@ public class LikeServiceImpl implements LikeService {
     @Override
     public Like makeLike(PostLikeRequest postLikeRequest) {
         Like like = map(postLikeRequest);
-        if(!checkIfUserLikeExist(postLikeRequest)) {
+        if(!checkIfUserLikeExist(postLikeRequest, likeRepository.findAll())) {
             likeRepository.save(like);
             return like;
         }
         throw new LikeAlreadyExistException("Like already Exist");
     }
 
-    private boolean checkIfUserLikeExist(PostLikeRequest postLikeRequest) {
-        for(Like like: likeRepository.findAll()){
-            if(like.getLikedBy().equals(postLikeRequest.getLikedBy()) &&
-                    like.getPostTitle().equals(postLikeRequest.getPostTitle()))
-                return true;
-        }
-        return false;
-    }
+
 }
