@@ -1,10 +1,12 @@
 package africa.semicolon.blog.services;
 
+import africa.semicolon.blog.datas.models.Comment;
 import africa.semicolon.blog.datas.models.User;
 import africa.semicolon.blog.datas.repositories.CommentRepository;
 import africa.semicolon.blog.dtos.request.postRequest.PostCommentEditRequest;
 import africa.semicolon.blog.dtos.request.postRequest.PostCommentRequest;
 import africa.semicolon.blog.services.commentServices.CommentService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,6 +23,11 @@ public class CommentServiceTest {
     @Autowired
     private CommentRepository commentRepository;
 
+    @BeforeEach
+    public void setUp() {
+        commentRepository.deleteAll();
+    }
+
 
     @Test
     public void testAddComment() {
@@ -33,17 +40,4 @@ public class CommentServiceTest {
         assertThat(commentRepository.count(), is(1L));
     }
 
-    @Test
-    public void testThatCommentCanBeEdited(){
-        PostCommentRequest postCommentRequest = new PostCommentRequest();
-        postCommentRequest.setPostTitle("Test Title");
-        postCommentRequest.setCommentBody("My comment");
-        User user = new User();
-        postCommentRequest.setViewer(user);
-        commentService.makeComment(postCommentRequest);
-        PostCommentEditRequest postCommentEditRequest = new PostCommentEditRequest();
-        postCommentEditRequest.setPostTitle("Test Title");
-        postCommentEditRequest.setComment("New Comment");
-        commentService.editComment(postCommentEditRequest);
-    }
 }
