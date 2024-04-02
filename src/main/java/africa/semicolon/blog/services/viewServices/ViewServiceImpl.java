@@ -3,9 +3,9 @@ package africa.semicolon.blog.services.viewServices;
 import africa.semicolon.blog.datas.models.View;
 import africa.semicolon.blog.datas.repositories.ViewRepository;
 import africa.semicolon.blog.dtos.request.postRequest.PostViewRequest;
+import africa.semicolon.blog.exceptions.ViewAlreadyExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import static africa.semicolon.blog.utils.Mapper.map;
 
 @Service("ViewServiceImpl")
@@ -17,7 +17,20 @@ public class ViewServiceImpl implements ViewService{
     @Override
     public View viewPost(PostViewRequest postViewRequest) {
         View view = map(postViewRequest);
-        viewRepository.save(view);
-        return view;
+        if(!checkIfViewAlreadyExist(postViewRequest)){
+            viewRepository.save(view);
+            return view;
+        }
+        throw new ViewAlreadyExistException("View already exist");
+    }
+
+    private boolean checkIfViewAlreadyExist(PostViewRequest postViewRequest) {
+        for(View view: viewRepository.findAll()){
+            if(view.getViewer().equals(postViewRequest.getViewer())
+                    && view.getPostTitle().equals(postViewRequest.getPostTitle())){
+                return true;
+            }
+        }
+        return false;
     }
 }
