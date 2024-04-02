@@ -4,6 +4,7 @@ import africa.semicolon.blog.datas.models.Post;
 import africa.semicolon.blog.datas.models.User;
 import africa.semicolon.blog.datas.repositories.LikeRepository;
 import africa.semicolon.blog.dtos.request.postRequest.PostLikeRequest;
+import africa.semicolon.blog.exceptions.LikeAlreadyExistException;
 import africa.semicolon.blog.services.likeServices.LikeService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,6 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 public class LikeServiceTest {
@@ -49,7 +51,7 @@ public class LikeServiceTest {
         PostLikeRequest postLikeRequest2 = new PostLikeRequest();
         postLikeRequest2.setLikedBy(user);
         postLikeRequest2.setPostTitle(post.getTitle());
-        likeService.makeLike(postLikeRequest2);
+        assertThrows(LikeAlreadyExistException.class, ()->likeService.makeLike(postLikeRequest2));
         assertThat(likeRepository.count(), is(1L));
     }
 
