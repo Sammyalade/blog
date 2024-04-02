@@ -2,8 +2,10 @@ package africa.semicolon.blog.services.likeServices;
 
 import africa.semicolon.blog.datas.models.Like;
 import africa.semicolon.blog.datas.repositories.LikeRepository;
+import africa.semicolon.blog.dtos.request.postRequest.PostLikeRemoveRequest;
 import africa.semicolon.blog.dtos.request.postRequest.PostLikeRequest;
 import africa.semicolon.blog.exceptions.LikeAlreadyExistException;
+import africa.semicolon.blog.exceptions.LikeNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +27,19 @@ public class LikeServiceImpl implements LikeService {
             return like;
         }
         throw new LikeAlreadyExistException("Like already Exist");
+    }
+
+    @Override
+    public void removeLike(PostLikeRemoveRequest postLikeRemoveRequest) {
+        if(checkIfUserLikeExist(postLikeRemoveRequest, likeRepository.findAll())){
+            likeRepository.delete(findLike(postLikeRemoveRequest.getPostId()));
+        }
+    }
+
+    private Like findLike(String postId) {
+        for(Like like: likeRepository.findAll())
+            if(like.getPostTitle().equals(postId)) return like;
+        throw new LikeNotFoundException("Like not found");
     }
 
 
