@@ -1,6 +1,6 @@
 package africa.semicolon.blog.services;
 
-import africa.semicolon.blog.Main;
+import africa.semicolon.blog.datas.models.Post;
 import africa.semicolon.blog.datas.models.User;
 import africa.semicolon.blog.datas.repositories.LikeRepository;
 import africa.semicolon.blog.dtos.request.postRequest.PostLikeRequest;
@@ -36,4 +36,21 @@ public class LikeServiceTest {
         likeService.makeLike(postLikeRequest);
         assertThat(likeRepository.count(), is(1L));
     }
+
+    @Test
+    public void testThatOneUserCannotLikeAPostTwice() {
+        User user = new User();
+        Post post = new Post();
+        post.setTitle("Title");
+        PostLikeRequest postLikeRequest1 = new PostLikeRequest();
+        postLikeRequest1.setLikedBy(user);
+        postLikeRequest1.setPostTitle(post.getTitle());
+        likeService.makeLike(postLikeRequest1);
+        PostLikeRequest postLikeRequest2 = new PostLikeRequest();
+        postLikeRequest2.setLikedBy(user);
+        postLikeRequest2.setPostTitle(post.getTitle());
+        likeService.makeLike(postLikeRequest2);
+        assertThat(likeRepository.count(), is(1L));
+    }
+
 }
