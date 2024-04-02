@@ -3,6 +3,7 @@ package africa.semicolon.blog.services;
 import africa.semicolon.blog.datas.models.Post;
 import africa.semicolon.blog.datas.models.User;
 import africa.semicolon.blog.datas.repositories.LikeRepository;
+import africa.semicolon.blog.dtos.request.postRequest.PostLikeRemoveRequest;
 import africa.semicolon.blog.dtos.request.postRequest.PostLikeRequest;
 import africa.semicolon.blog.exceptions.LikeAlreadyExistException;
 import africa.semicolon.blog.services.likeServices.LikeService;
@@ -53,6 +54,22 @@ public class LikeServiceTest {
         postLikeRequest2.setPostTitle(post.getTitle());
         assertThrows(LikeAlreadyExistException.class, ()->likeService.makeLike(postLikeRequest2));
         assertThat(likeRepository.count(), is(1L));
+    }
+
+    @Test
+    public void likePost_removeLike_likeIsRemovedTest(){
+        User user = new User();
+        Post post = new Post();
+        post.setTitle("Title");
+        PostLikeRequest postLikeRequest1 = new PostLikeRequest();
+        postLikeRequest1.setLikedBy(user);
+        postLikeRequest1.setPostTitle(post.getTitle());
+        likeService.makeLike(postLikeRequest1);
+        PostLikeRemoveRequest postLikeRemoveRequest = new PostLikeRemoveRequest();
+        postLikeRemoveRequest.setPostId(post.getTitle());
+        postLikeRemoveRequest.setLikedBy(user);
+        likeService.removeLike(postLikeRemoveRequest);
+        assertThat(likeRepository.count(), is(0L));
     }
 
 }
