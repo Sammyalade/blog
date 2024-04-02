@@ -2,6 +2,7 @@ package africa.semicolon.blog.services;
 
 import africa.semicolon.blog.datas.models.User;
 import africa.semicolon.blog.datas.repositories.CommentRepository;
+import africa.semicolon.blog.dtos.request.postRequest.PostCommentEditRequest;
 import africa.semicolon.blog.dtos.request.postRequest.PostCommentRequest;
 import africa.semicolon.blog.services.commentServices.CommentService;
 import org.junit.jupiter.api.Test;
@@ -40,6 +41,9 @@ public class CommentServiceTest {
         User user = new User();
         postCommentRequest.setViewer(user);
         commentService.makeComment(postCommentRequest);
-        commentService.editComment(PostCommentEditRequest);
+        PostCommentEditRequest postCommentEditRequest = new PostCommentEditRequest();
+        postCommentEditRequest.setPostTitle("Test Title");
+        postCommentEditRequest.setComment("New Comment");
+        commentService.editComment(postCommentEditRequest);
     }
 }
