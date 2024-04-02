@@ -1,9 +1,7 @@
 package africa.semicolon.blog.services;
 
-import africa.semicolon.blog.datas.models.Comment;
 import africa.semicolon.blog.datas.models.User;
 import africa.semicolon.blog.datas.repositories.CommentRepository;
-import africa.semicolon.blog.dtos.request.postRequest.PostCommentEditRequest;
 import africa.semicolon.blog.dtos.request.postRequest.PostCommentRequest;
 import africa.semicolon.blog.services.commentServices.CommentService;
 import org.junit.jupiter.api.BeforeEach;
