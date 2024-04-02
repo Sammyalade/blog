@@ -6,6 +6,4 @@ import africa.semicolon.blog.dtos.request.postRequest.PostCommentRequest;
 
 public interface CommentService {
     Comment makeComment(PostCommentRequest postCommentRequest);
-
-    void editComment(PostCommentEditRequest postCommentEditRequest);
 }
