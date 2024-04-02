@@ -69,6 +69,10 @@ public class PostServiceImpl implements PostService {
         post.getViews().add(view);
     }
 
+    @Override
+    public void removeLike(PostLikeRemoveRequest postLikeRemoveRequest) {
+        likeService.removeLike(postLikeRemoveRequest);
+    }
 
 
     @Override
@@ -88,6 +92,8 @@ public class PostServiceImpl implements PostService {
         post.setLikes((List<Like>) checkIfListIsNull(post.getLikes()));
         post.getLikes().add(like);
     }
+
+
 
 
 
