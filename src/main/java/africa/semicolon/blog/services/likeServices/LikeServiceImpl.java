@@ -31,14 +31,13 @@ public class LikeServiceImpl implements LikeService {
 
     @Override
     public void removeLike(PostLikeRemoveRequest postLikeRemoveRequest) {
-        if(checkIfUserLikeExist(postLikeRemoveRequest, likeRepository.findAll())){
-            likeRepository.delete(findLike(postLikeRemoveRequest.getPostId()));
-        }
+        likeRepository.delete(findLike(postLikeRemoveRequest));
     }
 
-    private Like findLike(String postId) {
-        for(Like like: likeRepository.findAll())
-            if(like.getPostTitle().equals(postId)) return like;
+    private Like findLike(PostLikeRemoveRequest postLikeRemoveRequest) {
+        for(Like like: likeRepository.findAll()) {
+            if (like.getPostTitle().equals(postLikeRemoveRequest.getPostId())) return like;
+        }
         throw new LikeNotFoundException("Like not found");
     }
 
