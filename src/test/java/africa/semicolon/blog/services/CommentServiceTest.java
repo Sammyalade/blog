@@ -1,6 +1,5 @@
 package africa.semicolon.blog.services;
 
-import africa.semicolon.blog.Main;
 import africa.semicolon.blog.datas.models.User;
 import africa.semicolon.blog.datas.repositories.CommentRepository;
 import africa.semicolon.blog.dtos.request.postRequest.PostCommentRequest;
@@ -31,5 +30,16 @@ public class CommentServiceTest {
         postCommentRequest.setViewer(user);
         commentService.makeComment(postCommentRequest);
         assertThat(commentRepository.count(), is(1L));
+    }
+
+    @Test
+    public void testThatCommentCanBeEdited(){
+        PostCommentRequest postCommentRequest = new PostCommentRequest();
+        postCommentRequest.setPostTitle("Test Title");
+        postCommentRequest.setCommentBody("My comment");
+        User user = new User();
+        postCommentRequest.setViewer(user);
+        commentService.makeComment(postCommentRequest);
+        commentService.editComment(PostCommentEditRequest);
     }
 }
