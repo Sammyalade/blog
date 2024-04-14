@@ -10,4 +10,6 @@ public interface CommentService {
     void deleteComment(String id);
 
     void editComment(CommentEditRequest commentEditRequest);
+
+    Comment findComment(String commentId);
 }
