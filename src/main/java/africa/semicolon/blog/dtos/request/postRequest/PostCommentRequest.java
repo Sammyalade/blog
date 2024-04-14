@@ -6,6 +6,6 @@ import lombok.Data;
 @Data
 public class PostCommentRequest {
     private String commentBody;
-    private String viewerId;
+    private User viewer;
     private String postTitle;
 }
