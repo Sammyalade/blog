@@ -31,13 +31,15 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public void editComment(CommentEditRequest commentEditRequest){
-        Optional<Comment> comment = commentRepository.findById(commentEditRequest.getCommentId());
-        if(comment.isPresent()){
-            comment.get().setCommentBody(commentEditRequest.getCommentBody());
-            commentRepository.save(comment.get());
-        }
-        else {
-            throw new CommentNotFoundException("Comment not found");
-        }
+        Comment comment = findComment(commentEditRequest.getCommentId());
+        comment.setCommentBody(commentEditRequest.getCommentBody());
+        commentRepository.save(comment);
     }
+
+    @Override
+    public Comment findComment(String commentId) {
+        return commentRepository.findById(commentId)
+                .orElseThrow(() -> new CommentNotFoundException("Comment not found"));
+    }
+
 }
