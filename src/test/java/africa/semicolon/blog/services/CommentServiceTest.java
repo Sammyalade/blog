@@ -3,6 +3,7 @@ package africa.semicolon.blog.services;
 import africa.semicolon.blog.datas.models.Comment;
 import africa.semicolon.blog.datas.models.User;
 import africa.semicolon.blog.datas.repositories.CommentRepository;
+import africa.semicolon.blog.dtos.request.postRequest.CommentEditRequest;
 import africa.semicolon.blog.dtos.request.postRequest.PostCommentRequest;
 import africa.semicolon.blog.services.commentServices.CommentService;
 import org.junit.jupiter.api.BeforeEach;
@@ -34,7 +35,7 @@ public class CommentServiceTest {
         postCommentRequest.setPostTitle("Test Title");
         postCommentRequest.setCommentBody("My comment");
         User user = new User();
-        postCommentRequest.setViewerId(user.getId());
+        postCommentRequest.setViewer(user);
         commentService.makeComment(postCommentRequest);
         assertThat(commentRepository.count(), is(1L));
     }
@@ -45,10 +46,25 @@ public class CommentServiceTest {
         postCommentRequest.setPostTitle("Test Title");
         postCommentRequest.setCommentBody("My comment");
         User user = new User();
-        postCommentRequest.setViewerId(user.getId());
+        postCommentRequest.setViewer(user);
         Comment comment = commentService.makeComment(postCommentRequest);
         commentService.deleteComment(comment.getId());
         assertThat(commentRepository.count(), is(0L));
+    }
+
+    @Test
+    public void editCommentTest(){
+        PostCommentRequest postCommentRequest = new PostCommentRequest();
+        postCommentRequest.setPostTitle("Test Title");
+        postCommentRequest.setCommentBody("My comment");
+        User user = new User();
+        postCommentRequest.setViewer(user);
+        Comment comment = commentService.makeComment(postCommentRequest);
+        CommentEditRequest commentEditRequest = new CommentEditRequest();
+        commentEditRequest.setCommentBody("NewComment");
+        commentEditRequest.setCommentId(comment.getId());
+        commentService.editComment(commentEditRequest);
+        assertThat(commentRepository.findCommentBy(comment).getCommentBody(), is("NewComment"));
     }
 
 }
