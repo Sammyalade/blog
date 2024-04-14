@@ -1,5 +1,6 @@
 package africa.semicolon.blog.services;
 
+import africa.semicolon.blog.datas.models.Comment;
 import africa.semicolon.blog.datas.models.User;
 import africa.semicolon.blog.datas.repositories.CommentRepository;
 import africa.semicolon.blog.dtos.request.postRequest.PostCommentRequest;
@@ -33,9 +34,21 @@ public class CommentServiceTest {
         postCommentRequest.setPostTitle("Test Title");
         postCommentRequest.setCommentBody("My comment");
         User user = new User();
-        postCommentRequest.setViewer(user);
+        postCommentRequest.setViewerId(user.getId());
         commentService.makeComment(postCommentRequest);
         assertThat(commentRepository.count(), is(1L));
+    }
+
+    @Test
+    public void deleteCommentTest(){
+        PostCommentRequest postCommentRequest = new PostCommentRequest();
+        postCommentRequest.setPostTitle("Test Title");
+        postCommentRequest.setCommentBody("My comment");
+        User user = new User();
+        postCommentRequest.setViewerId(user.getId());
+        Comment comment = commentService.makeComment(postCommentRequest);
+        commentService.deleteComment(comment.getId());
+        assertThat(commentRepository.count(), is(0L));
     }
 
 }
