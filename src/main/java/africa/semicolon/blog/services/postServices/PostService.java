@@ -1,6 +1,6 @@
 package africa.semicolon.blog.services.postServices;
 
-import africa.semicolon.blog.dtos.request.postRequest.*;
+import africa.semicolon.blog.dtos.requests.*;
 
 public interface PostService {
 
