@@ -1,14 +1,16 @@
 package africa.semicolon.blog.services.userServices;
 
+import africa.semicolon.blog.datas.models.Like;
+import africa.semicolon.blog.datas.models.Post;
 import africa.semicolon.blog.datas.models.User;
 import africa.semicolon.blog.datas.repositories.UserRepository;
-import africa.semicolon.blog.dtos.requests.UserLoginRequest;
-import africa.semicolon.blog.dtos.requests.UserRegistrationRequest;
-import africa.semicolon.blog.dtos.requests.UserUpdateRequest;
-import africa.semicolon.blog.dtos.requests.UserUpdateResponse;
+import africa.semicolon.blog.dtos.requests.*;
+import africa.semicolon.blog.dtos.responses.PostCreationResponse;
 import africa.semicolon.blog.dtos.responses.UserRegistrationResponse;
 import africa.semicolon.blog.exceptions.UserLockedException;
 import africa.semicolon.blog.exceptions.UserNotFoundException;
+import africa.semicolon.blog.services.likeServices.LikeService;
+import africa.semicolon.blog.services.postServices.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +23,11 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private PostService postService;
+    @Autowired
+    private LikeService likeService;
+
 
     @Override
     public UserRegistrationResponse registerUser(UserRegistrationRequest userRegistrationRequest) {
@@ -74,6 +81,26 @@ public class UserServiceImpl implements UserService {
     }
 
 
+    @Override
+    public PostCreationResponse createPost(PostCreationRequest postCreationRequest) {
+        User user = searchUserById(postCreationRequest.getUserId());
+        if(!user.isLocked()) {
+            Post post = postService.makePost(postCreationRequest);
+            return map(post, user.getId());
+        }
+        throw new UserLockedException("User not logged in. Please login and try again");
+    }
+
+    @Override
+    public void likePost(PostLikeRequest postLikeRequest){
+        User user = searchUserById(postLikeRequest.getUserId());
+        if (!user.isLocked()) {
+            Post post = postService.findPostById(postLikeRequest.getPostId());
+            Like like = likeService.makeLike(postLikeRequest);
+            post.getLikes().add(like);
+        }
+        else throw new UserLockedException("User not locked. Please login and try again");
+    }
 
 
 }
