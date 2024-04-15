@@ -5,7 +5,7 @@ import africa.semicolon.blog.datas.models.Like;
 import africa.semicolon.blog.datas.models.Post;
 import africa.semicolon.blog.datas.models.View;
 import africa.semicolon.blog.datas.repositories.PostRepository;
-import africa.semicolon.blog.dtos.request.postRequest.*;
+import africa.semicolon.blog.dtos.requests.*;
 import africa.semicolon.blog.exceptions.EmptyStringException;
 import africa.semicolon.blog.exceptions.PostNotFoundException;
 import africa.semicolon.blog.exceptions.UniqueTitleException;
