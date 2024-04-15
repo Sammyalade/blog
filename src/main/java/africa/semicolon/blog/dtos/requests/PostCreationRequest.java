@@ -8,4 +8,5 @@ public class PostCreationRequest {
 
     private String title;
     private String content;
+    private String userId;
 }
