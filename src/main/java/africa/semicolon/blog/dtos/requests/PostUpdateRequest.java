@@ -1,4 +1,4 @@
-package africa.semicolon.blog.dtos.request.postRequest;
+package africa.semicolon.blog.dtos.requests;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
