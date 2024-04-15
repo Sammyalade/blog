@@ -1,4 +1,4 @@
-package africa.semicolon.blog.dtos.request.postRequest;
+package africa.semicolon.blog.dtos.requests;
 
 import africa.semicolon.blog.datas.models.User;
 import lombok.Data;
