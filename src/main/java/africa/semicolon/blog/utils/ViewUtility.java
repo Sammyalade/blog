@@ -1,7 +1,7 @@
 package africa.semicolon.blog.utils;
 
 import africa.semicolon.blog.datas.models.View;
-import africa.semicolon.blog.dtos.request.postRequest.PostViewRequest;
+import africa.semicolon.blog.dtos.requests.PostViewRequest;
 
 import java.util.List;
 
