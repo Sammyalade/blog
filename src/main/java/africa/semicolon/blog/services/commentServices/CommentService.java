@@ -1,8 +1,8 @@
 package africa.semicolon.blog.services.commentServices;
 
 import africa.semicolon.blog.datas.models.Comment;
-import africa.semicolon.blog.dtos.request.postRequest.CommentEditRequest;
-import africa.semicolon.blog.dtos.request.postRequest.PostCommentRequest;
+import africa.semicolon.blog.dtos.requests.CommentEditRequest;
+import africa.semicolon.blog.dtos.requests.PostCommentRequest;
 
 public interface CommentService {
     Comment makeComment(PostCommentRequest postCommentRequest);
