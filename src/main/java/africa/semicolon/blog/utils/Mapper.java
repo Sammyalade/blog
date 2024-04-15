@@ -2,7 +2,12 @@ package africa.semicolon.blog.utils;
 
 import africa.semicolon.blog.datas.models.*;
 import africa.semicolon.blog.dtos.requests.*;
+import africa.semicolon.blog.dtos.responses.PostCreationResponse;
 import africa.semicolon.blog.dtos.responses.UserRegistrationResponse;
+
+import java.util.List;
+
+import static africa.semicolon.blog.utils.PostUtility.checkIfListIsNull;
 
 public class Mapper {
 
@@ -10,6 +15,9 @@ public class Mapper {
         Post post = new Post();
         post.setTitle(postCreationRequest.getTitle());
         post.setContent(postCreationRequest.getContent());
+        post.setLikes((List<Like>) checkIfListIsNull(post.getLikes()));
+        post.setViews((List<View>) checkIfListIsNull(post.getViews()));
+        post.setComments((List<Comment>) checkIfListIsNull(post.getComments()));
         return post;
     }
 
@@ -30,7 +38,6 @@ public class Mapper {
 
     public static Like map(PostLikeRequest postLikeRequest){
         Like like = new Like();
-        like.setLikedBy(postLikeRequest.getLikedBy());
         like.setPostTitle(postLikeRequest.getPostTitle());
         return like;
     }
@@ -54,5 +61,14 @@ public class Mapper {
         UserUpdateResponse userUpdateResponse = new UserUpdateResponse();
         userUpdateResponse.setUserName(userUpdateRequest.getUserName());
         userUpdateResponse.setUserId(userUpdateRequest.getUserId());
+        return userUpdateResponse;
+    }
+
+    public static PostCreationResponse map(Post post, String userId) {
+        PostCreationResponse postCreationResponse = new PostCreationResponse();
+        postCreationResponse.setPostTitle(post.getTitle());
+        postCreationResponse.setPostId(post.getId());
+        postCreationResponse.setUserid(userId);
+        return postCreationResponse;
     }
 }
