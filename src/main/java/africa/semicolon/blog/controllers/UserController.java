@@ -1,5 +1,6 @@
 package africa.semicolon.blog.controllers;
 
+import africa.semicolon.blog.dtos.requests.UserLoginRequest;
 import africa.semicolon.blog.dtos.requests.UserRegistrationRequest;
 import africa.semicolon.blog.dtos.requests.UserUpdateRequest;
 import africa.semicolon.blog.dtos.requests.UserUpdateResponse;
@@ -52,4 +53,24 @@ public class UserController {
         }
     }
 
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody UserLoginRequest userLoginRequest) {
+        try {
+            userService.loginUser(userLoginRequest);
+            return new ResponseEntity<>(new UserApiResponse(true, "Login successful"), CREATED);
+        } catch (BlogException e){
+            return new ResponseEntity<>(new UserApiResponse(false , e.getMessage()), BAD_REQUEST);
+        }
+    }
+
+    @PatchMapping("/logout/{userId}")
+    public ResponseEntity<?> logout(@PathVariable("userId") String userId) {
+        try{
+            userService.logoutUser(userId);
+            return new ResponseEntity<>(new UserApiResponse(true, "Logout successful"), CREATED);
+        } catch (BlogException e){
+            return new ResponseEntity<>(new UserApiResponse(false , e.getMessage()), BAD_REQUEST);
+        }
+    }
 }
+
