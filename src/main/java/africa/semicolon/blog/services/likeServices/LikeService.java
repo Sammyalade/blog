@@ -1,8 +1,8 @@
 package africa.semicolon.blog.services.likeServices;
 
 import africa.semicolon.blog.datas.models.Like;
-import africa.semicolon.blog.dtos.request.postRequest.PostLikeRemoveRequest;
-import africa.semicolon.blog.dtos.request.postRequest.PostLikeRequest;
+import africa.semicolon.blog.dtos.requests.PostLikeRemoveRequest;
+import africa.semicolon.blog.dtos.requests.PostLikeRequest;
 
 public interface LikeService {
 
