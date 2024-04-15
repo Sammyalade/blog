@@ -3,7 +3,7 @@ package africa.semicolon.blog.services;
 import africa.semicolon.blog.datas.models.Post;
 import africa.semicolon.blog.datas.models.User;
 import africa.semicolon.blog.datas.repositories.ViewRepository;
-import africa.semicolon.blog.dtos.request.postRequest.PostViewRequest;
+import africa.semicolon.blog.dtos.requests.PostViewRequest;
 import africa.semicolon.blog.exceptions.ViewAlreadyExistException;
 import africa.semicolon.blog.services.viewServices.ViewService;
 import org.junit.jupiter.api.BeforeEach;
