@@ -6,7 +6,7 @@ import africa.semicolon.blog.datas.repositories.CommentRepository;
 import africa.semicolon.blog.datas.repositories.LikeRepository;
 import africa.semicolon.blog.datas.repositories.PostRepository;
 import africa.semicolon.blog.datas.repositories.ViewRepository;
-import africa.semicolon.blog.dtos.request.postRequest.*;
+import africa.semicolon.blog.dtos.requests.*;
 import africa.semicolon.blog.exceptions.EmptyStringException;
 import africa.semicolon.blog.exceptions.PostNotFoundException;
 import africa.semicolon.blog.exceptions.UniqueTitleException;
