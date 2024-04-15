@@ -34,11 +34,12 @@ public class PostServiceImpl implements PostService {
     private LikeService likeService;
 
     @Override
-    public void makePost(PostCreationRequest postCreationRequest) {
+    public Post makePost(PostCreationRequest postCreationRequest) {
         Post post = map(postCreationRequest);
         validateForEmptyString(post);
         checkForUniqueTitle(postCreationRequest);
         postRepository.save(post);
+        return post;
     }
 
 
@@ -91,6 +92,12 @@ public class PostServiceImpl implements PostService {
         checkIfPostIsNotNull(post);
         post.setLikes((List<Like>) checkIfListIsNull(post.getLikes()));
         post.getLikes().add(like);
+    }
+
+    @Override
+    public Post findPostById(String postId){
+        return postRepository.findById(postId)
+                .orElseThrow(()->new PostNotFoundException("Post not found"));
     }
 
 
