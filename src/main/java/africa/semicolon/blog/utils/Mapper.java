@@ -1,17 +1,8 @@
 package africa.semicolon.blog.utils;
 
-import africa.semicolon.blog.datas.models.Comment;
-import africa.semicolon.blog.datas.models.Like;
-import africa.semicolon.blog.datas.models.Post;
-import africa.semicolon.blog.datas.models.View;
-import africa.semicolon.blog.dtos.request.postRequest.PostCommentRequest;
-import africa.semicolon.blog.dtos.request.postRequest.PostCreationRequest;
-import africa.semicolon.blog.dtos.request.postRequest.PostLikeRequest;
-import africa.semicolon.blog.dtos.request.postRequest.PostViewRequest;
-
-import java.util.List;
-
-import static africa.semicolon.blog.utils.PostUtility.findPost;
+import africa.semicolon.blog.datas.models.*;
+import africa.semicolon.blog.dtos.requests.*;
+import africa.semicolon.blog.dtos.responses.UserRegistrationResponse;
 
 public class Mapper {
 
@@ -42,5 +33,26 @@ public class Mapper {
         like.setLikedBy(postLikeRequest.getLikedBy());
         like.setPostTitle(postLikeRequest.getPostTitle());
         return like;
+    }
+
+    public static User map(UserRegistrationRequest userRegistrationRequest) {
+        User user = new User();
+        user.setUsername(userRegistrationRequest.getUsername());
+        user.setEmail(userRegistrationRequest.getEmail());
+        return user;
+    }
+
+    public static UserRegistrationResponse map(User user) {
+        UserRegistrationResponse userRegistrationResponse = new UserRegistrationResponse();
+        userRegistrationResponse.setUsername(user.getUsername());
+        userRegistrationResponse.setEmail(user.getEmail());
+        userRegistrationResponse.setUserId(user.getId());
+        return userRegistrationResponse;
+    }
+
+    public static UserUpdateResponse map(UserUpdateRequest userUpdateRequest, String username) {
+        UserUpdateResponse userUpdateResponse = new UserUpdateResponse();
+        userUpdateResponse.setUserName(userUpdateRequest.getUserName());
+        userUpdateResponse.setUserId(userUpdateRequest.getUserId());
     }
 }
